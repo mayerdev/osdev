@@ -1,0 +1,19 @@
+{
+  "name": "osdev",
+  "version": "0.0.1",
+  "description": "osdev.org на русском",
+  "main": "index.js",
+  "authors": {
+    "name": "Artem Lomakin",
+    "email": "mayer.dev@yahoo.com"
+  },
+  "repository": "https://github.com/mayerdev/osdev/osdev",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}
