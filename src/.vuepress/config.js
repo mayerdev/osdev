@@ -3,15 +3,16 @@ const { description } = require('../../package')
 module.exports = {
   title: 'Разработка ОС',
   description: description,
+  base: '/osdev/',
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
   ],
   themeConfig: {
-    repo: '',
+    repo: 'https://github.com/mayerdev/osdev',
     editLinks: false,
-    docsDir: '',
+    docsDir: '/',
     editLinkText: '',
     lastUpdated: false,
     nav: [
