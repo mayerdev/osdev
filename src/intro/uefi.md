@@ -643,11 +643,11 @@ section '.text' code executable readable
 include 'uefi.inc'
  
 main:
-    ; initialize UEFI library
+    ; Инициализация библиотеки UEFI
     InitializeLib
     jc @f
  
-    ; call uefi function to print to screen
+    ; Вызов UEFI-функции для вывода на экран
     uefi_call_wrapper ConOut, OutputString, ConOut, _hello
  
 @@: mov eax, EFI_SUCCESS
