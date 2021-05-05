@@ -61,7 +61,8 @@ module.exports = {
             'kcl-linking',
             'isr',
             'languages',
-            'uefi'
+            'uefi',
+            'bios'
           ]
         }
       ],
