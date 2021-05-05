@@ -56,7 +56,12 @@ module.exports = {
           children: [
             '',
             'required',
-            'mistakes'
+            'mistakes',
+            'getting-started',
+            'kcl-linking',
+            'isr',
+            'languages',
+            'uefi'
           ]
         }
       ],
