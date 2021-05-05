@@ -689,7 +689,7 @@ SystemTable->BootServices->SetWatchdogTimer(0, 0, 0, NULL);
 - [OVMF firmware images](https://github.com/tianocore/tianocore.github.io/wiki/OVMF)
 - [Phoenix UEFI Wiki](http://wiki.phoenix.com/)
 - [Sereval articles about UEFI](http://x86asm.net/articles/others/index.html)
-- [PE specification covering the (U)EFI binary format][https://www.microsoft.com/en-us/download/details.aspx?id=19509]
+- [PE specification covering the (U)EFI binary format](https://www.microsoft.com/en-us/download/details.aspx?id=19509)
 - [Blog about UEFI, with bits about UEFI development](https://uefi.blogspot.com/)
 - [Presentation guiding through simple UEFI application setup](http://internshipatdell.wikispaces.com/file/view/How+to+build+an+UEFI+application.pptx)
 - [Presentation giving an overview of windows uefi booting](http://www.uefi.org/sites/default/files/resources/UEFI-Plugfest-WindowsBootEnvironment.pdf)
