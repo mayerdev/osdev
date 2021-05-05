@@ -62,7 +62,8 @@ module.exports = {
             'isr',
             'languages',
             'uefi',
-            'bios'
+            'bios',
+            'inline-asm'
           ]
         }
       ],
