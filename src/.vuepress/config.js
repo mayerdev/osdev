@@ -64,7 +64,8 @@ module.exports = {
             'languages',
             'uefi',
             'bios',
-            'inline-asm'
+            'inline-asm',
+            'skeleton'
           ]
         }
       ],
