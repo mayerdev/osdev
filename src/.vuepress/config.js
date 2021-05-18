@@ -21,6 +21,10 @@ module.exports = {
         link: '/intro/',
       },
       {
+        text: 'Гайд для чайников', // e.g. "baby steps" в оригинале
+        link: '/teapot/',
+      },
+      {
         text: 'Аппаратная часть',
         link: '/hardware/',
       },
@@ -65,7 +69,13 @@ module.exports = {
             'uefi',
             'bios',
             'inline-asm',
-            'skeleton'
+            'first-steps',
+            'first-steps-ada',
+            'first-steps-d',
+            'first-steps-pascal',
+            'first-steps-freebasic',
+            'skeleton',
+            'boot'
           ]
         }
       ],
