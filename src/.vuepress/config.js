@@ -53,33 +53,31 @@ module.exports = {
         link: 'https://github.com/mayerdev/osdev'
       }
     ],
-    sidebar: {
-      '/intro/': [
-        {
-          title: 'Введение',
-          collapsable: false,
-          children: [
-            '',
-            'required',
-            'mistakes',
-            'getting-started',
-            'kcl-linking',
-            'isr',
-            'languages',
-            'uefi',
-            'bios',
-            'inline-asm',
-            'first-steps',
-            'first-steps-ada',
-            'first-steps-d',
-            'first-steps-pascal',
-            'first-steps-freebasic',
-            'skeleton',
-            'boot'
-          ]
-        }
-      ],
-    }
+    sidebar: [
+      {
+        title: 'Введение',
+        collapsable: false,
+        children: [
+          '/intro/',
+          '/intro/required',
+          '/intro/mistakes',
+          '/intro/getting-started',
+          '/intro/kcl-linking',
+          '/intro/isr',
+          '/intro/languages',
+          '/intro/uefi',
+          '/intro/bios',
+          '/intro/inline-asm',
+        ]
+      },
+      {
+        title: 'Первые шаги',
+        collapsable: false,
+        children: [
+          '/first-steps/bare-bones'
+        ]
+      }
+    ]
   },
 
   plugins: [
