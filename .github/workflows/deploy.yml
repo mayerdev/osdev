@@ -18,6 +18,8 @@ jobs:
         run: git checkout gh-pages && git stash pop
       - name: Extract build
         run: |
+          rm -rf assets
+          rm -rf intro
           mv src/.vuepress/dist/* .
           rm -rf src
           git add .
