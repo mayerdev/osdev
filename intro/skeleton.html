@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Пример организации ОС | Разработка ОС</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    
+    <meta name="description" content="osdev.org на русском">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/osdev/assets/css/0.styles.cf6cd58c.css" as="style"><link rel="preload" href="/osdev/assets/js/app.6d4e7c16.js" as="script"><link rel="preload" href="/osdev/assets/js/2.d8a8b755.js" as="script"><link rel="preload" href="/osdev/assets/js/24.e3d90789.js" as="script"><link rel="prefetch" href="/osdev/assets/js/10.f52dfc28.js"><link rel="prefetch" href="/osdev/assets/js/11.62d004c8.js"><link rel="prefetch" href="/osdev/assets/js/12.de6a66d3.js"><link rel="prefetch" href="/osdev/assets/js/13.5ce18855.js"><link rel="prefetch" href="/osdev/assets/js/14.2418957f.js"><link rel="prefetch" href="/osdev/assets/js/15.c118d926.js"><link rel="prefetch" href="/osdev/assets/js/16.d7ace87c.js"><link rel="prefetch" href="/osdev/assets/js/17.ed033aaf.js"><link rel="prefetch" href="/osdev/assets/js/18.fd5dcd0e.js"><link rel="prefetch" href="/osdev/assets/js/19.401c7b19.js"><link rel="prefetch" href="/osdev/assets/js/20.69a7aab0.js"><link rel="prefetch" href="/osdev/assets/js/21.aa99a090.js"><link rel="prefetch" href="/osdev/assets/js/22.21e5a0d1.js"><link rel="prefetch" href="/osdev/assets/js/23.25b4c5a4.js"><link rel="prefetch" href="/osdev/assets/js/25.f01e693e.js"><link rel="prefetch" href="/osdev/assets/js/3.9d834bc1.js"><link rel="prefetch" href="/osdev/assets/js/4.15995e12.js"><link rel="prefetch" href="/osdev/assets/js/5.3392b390.js"><link rel="prefetch" href="/osdev/assets/js/6.a16b59c6.js"><link rel="prefetch" href="/osdev/assets/js/7.5089196a.js"><link rel="prefetch" href="/osdev/assets/js/8.83af78e0.js"><link rel="prefetch" href="/osdev/assets/js/9.f2730610.js">
+    <link rel="stylesheet" href="/osdev/assets/css/0.styles.cf6cd58c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/osdev/" class="home-link router-link-active"><!----> <span class="site-name">Разработка ОС</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/osdev/intro/" class="nav-link router-link-active">
+  Введение
+</a></div><div class="nav-item"><a href="/osdev/teapot/" class="nav-link">
+  Гайд для чайников
+</a></div><div class="nav-item"><a href="/osdev/hardware/" class="nav-link">
+  Аппаратная часть
+</a></div><div class="nav-item"><a href="/osdev/os/" class="nav-link">
+  Конструкция ОС
+</a></div><div class="nav-item"><a href="/osdev/resources/" class="nav-link">
+  Ресурсы
+</a></div><div class="nav-item"><a href="/osdev/reference/" class="nav-link">
+  Справочная информация
+</a></div><div class="nav-item"><a href="/osdev/tools/" class="nav-link">
+  Утилиты
+</a></div><div class="nav-item"><a href="https://wiki.osdev.org/Main_Page" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Оригинал
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/osdev/intro/" class="nav-link router-link-active">
+  Введение
+</a></div><div class="nav-item"><a href="/osdev/teapot/" class="nav-link">
+  Гайд для чайников
+</a></div><div class="nav-item"><a href="/osdev/hardware/" class="nav-link">
+  Аппаратная часть
+</a></div><div class="nav-item"><a href="/osdev/os/" class="nav-link">
+  Конструкция ОС
+</a></div><div class="nav-item"><a href="/osdev/resources/" class="nav-link">
+  Ресурсы
+</a></div><div class="nav-item"><a href="/osdev/reference/" class="nav-link">
+  Справочная информация
+</a></div><div class="nav-item"><a href="/osdev/tools/" class="nav-link">
+  Утилиты
+</a></div><div class="nav-item"><a href="https://wiki.osdev.org/Main_Page" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Оригинал
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Введение</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/osdev/intro/" aria-current="page" class="sidebar-link">Главная</a></li><li><a href="/osdev/intro/required.html" class="sidebar-link">Необходимые знания</a></li><li><a href="/osdev/intro/mistakes.html" class="sidebar-link">Ошибки начинающих</a></li><li><a href="/osdev/intro/getting-started.html" class="sidebar-link">Начало работы</a></li><li><a href="/osdev/intro/kcl-linking.html" class="sidebar-link">Как ядро, компилятор и код на C работают вместе</a></li><li><a href="/osdev/intro/isr.html" class="sidebar-link">Обработка прерываний</a></li><li><a href="/osdev/intro/languages.html" class="sidebar-link">Языки программирования</a></li><li><a href="/osdev/intro/uefi.html" class="sidebar-link">UEFI</a></li><li><a href="/osdev/intro/bios.html" class="sidebar-link">BIOS</a></li><li><a href="/osdev/intro/inline-asm.html" class="sidebar-link">Встроенная сборка</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Первые шаги</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/osdev/first-steps/bare-bones.html" class="sidebar-link">Голое железо</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="пример-организации-ос"><a href="#пример-организации-ос" class="header-anchor">#</a> Пример организации ОС</h1> <h2 id="основная-информация"><a href="#основная-информация" class="header-anchor">#</a> Основная информация</h2> <p>В этом уроке мы продолжим с первых шагов и создадим минимальную операционную систему-шаблон, подходящую для дальнейшей модификации или в качестве вдохновения для вашей начальной версии операционной системы. Туториал &quot;Первые шаги&quot; даёт вам только абсолютно минимальный код, чтобы продемонстрировать, как правильно скомпилировать ядро, однако это не подходит в качестве примера операционной системы. Кроме того, в этом туториале реализованы необходимые функции ABI, необходимые для выполнения функций ABI и компилятора, чтобы предотвратить возможные неожиданные ошибки.</p> <p>Этот туториал также служит в качестве начального гайда по тому, как создать свой собственный libc (Стандартная библиотека C). В документации GCC явно указано, что libgcc требует, чтобы автономная среда предоставляла функции memcmp, memcpy, memmove и memset. Мы выполним это требование, создав специальную библиотеку C-ядра (libk), которая содержит части пользовательского пространства libc, которые являются автономными (не требуют каких-либо функций ядра), в отличие от существующих функций libc, которые должны выполнять системные вызовы.</p> <h2 id="предисловие"><a href="#предисловие" class="header-anchor">#</a> Предисловие</h2> <p>Этот туториал является примером того, как вы можете структурировать свою операционную систему таким образом, чтобы вам не приходилось постоянно рефакторить её в будущем.</p> <p>Мы назовём нашу ОС <code>myos</code>. Вы можете далее использовать это название или придумать своё.</p> <h2 id="настроика-кросс-компилятора"><a href="#настроика-кросс-компилятора" class="header-anchor">#</a> Настройка кросс-компилятора</h2> <p>Вы должны использовать таргет i686-elf в своем кросс-компиляторе.</p> <p>Также вы должны сконфигурить cross-binutils с параметром --with-sysroot, иначе линковка завершится ошибкой this linker was not configured to use sysroots. Если вы забыли собрать cross-binutils с этим параметром, вам придется пересобрать его(пересобирать GCC необязательно).</p> <h2 id="зависимости-разработчика-после-создания-ос"><a href="#зависимости-разработчика-после-создания-ос" class="header-anchor">#</a> Зависимости <s>разработчика после создания ОС</s></h2> <p>Вам понадобятся эти инструменты:</p> <ul><li>i686-набор инструментов elf.</li> <li>GRUB, для команды grub-mkrescue, вместе с соответствующими runtime-файлами.</li> <li>Xorriso, для создания .iso, используемый grub-mkrescue.</li> <li>GNU make 4.0 или более поздней версии.</li> <li>QEMU, для тестирования операционной системы.</li></ul> <p>Вам потребуется система основанная на GNU/Linux.</p> <h3 id="для-пользователеи-debian"><a href="#для-пользователеи-debian" class="header-anchor">#</a> Для пользователей Debian</h3> <p>Установите набор инструментов <code>i686-elf</code>, а затем установите пакеты <code>xorriso</code> <code>grub-pc-bin</code>.</p> <h2 id="sysroot"><a href="#sysroot" class="header-anchor">#</a> Sysroot</h2> <p>Обычно при компиляции программ для локальной операционной системы компилятор находит заголовки и библиотеки, в системных каталогах, таких как:</p> <ul><li>/usr/include</li> <li>/usr/lib</li></ul> <p>Эти файлы конечно могут не использоваться в вашей ОС, скорее всего вы будете использовать собственные пути, например:</p> <ul><li>/home/depowered/myos/sysroot/usr/include</li> <li>/home/depowered/myos/sysroot/usr/lib</li></ul> <p>Каталог <code>/home/depowered/myos/sysroot</code> будет работать как sysroot-каталог для вашей ОС.</p> <div class="custom-block tip"><p class="custom-block-title">Что такое sysroot?</p> <p>Sysroot - это каталог, который считается корневым каталогом для поиска заголовков и библиотек. Так, например, если ваша сборка toolchain хочет найти /usr/include/foo.h но вы выполняете кросс-компиляцию, а соответствующий foo.h находится в /my/other/place/usr/include/foo.h, вы будете использовать /my/other/place как ваш sysroot.</p></div> <h2 id="заголовки"><a href="#заголовки" class="header-anchor">#</a> Заголовки</h2> <p><code>./headers.sh</code> просто устанавливает заголовки для вашего libc и ядра (системные заголовки) в <code>sysroot/usr/include</code>, но на самом деле не скомпилирует вашу операционную систему. Это полезно, так как позволяет предоставить компилятору копию ваших заголовков до того, как вы фактически скомпилируете свою систему.</p> <h2 id="makefile"><a href="#makefile" class="header-anchor">#</a> Makefile</h2> <p>Makefile — это файл, содержащий набор инструкций, используемых утилитой make в инструментарии автоматизации сборки. Чаще всего makefile содержит указания для утилиты make о том, как компилировать и компоновать программу.</p> <p>Пример Makefile:</p> <div class="language-makefile extra-class"><pre class="language-makefile"><code><span class="token comment"># Дефолтные CFLAGS:</span>
+CFLAGS<span class="token operator">?=</span>-O2 -g
+
+<span class="token comment"># Дополнительные параметры CFLAGS:</span>
+CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> -Wall -Wextra
+</code></pre></div><h2 id="архитектурные-директории"><a href="#архитектурные-директории" class="header-anchor">#</a> Архитектурные директории</h2> <p>Проекты в этом примере (libc и ядро) хранят все зависимые от архитектуры исходные файлы в каталоге <code>arch/</code> со своим собственным вложенным Makefile.</p> <h2 id="структура-ядра"><a href="#структура-ядра" class="header-anchor">#</a> Структура ядра</h2> <p>Мы переместили ядро в его собственный каталог с именем <code>kernel/</code>. Возможно, было бы лучше назвать его как-то иначе, если ваше ядро имеет другое имя, чем ваш полный дистрибутив операционной системы, хотя, называя его <code>kernel/</code>, другим разработчикам-любителям будет легче найти основные части вашей ОС.</p> <p>Ядро устанавливает свои общедоступные Header-файлы в <code>sysroot/usr/include/kernel</code>. Это полезно, если вы решите создать ядро с модулями, где модули могут просто получать общедоступные заголовки из основного ядра.</p> <p>GNU GRUB используется в качестве загрузчика, а ядро использует мультизагрузку, как в туториале &quot;Первые шаги&quot;.</p> <p>Ядро реализует правильный способ вызова глобальных конструкторов (полезно для кода C++ и кода C с использованием <strong>__attribute__((constructor))</strong>. Начальная загрузка вызывает _init, который вызывает все глобальные конструкторы. Они вызываются самими первыми при загрузке без какого-либо конкретного порядка. Вы должны использовать их только для инициализации глобальных переменных, которые не могут быть инициализированы во время выполнения.</p> <p>Специальный макрос <strong>__is_kernel</strong> позволяет исходному коду определить, является ли он частью ядра.</p> <p>Модуль ожидает подключения к ядру:
+<img src="/osdev/module.jpeg" alt="Модуль ожидает подключения к ядру"></p> <h2 id="структура-libc-и-libk"><a href="#структура-libc-и-libk" class="header-anchor">#</a> Структура libc и libk</h2> <p>libc и libk на самом деле являются двумя версиями одной и той же библиотеки, которая хранится в каталоге <code>libc/</code>. Стандартная библиотека разделена на две версии: автономную и размещенную. Разница в том, что автономная библиотека (libk) не содержит кода, который работает только в пользовательском пространстве, например системных вызовов. libk также собирается с различными параметрами компилятор.</p> <p>Каждая стандартная функция помещается в файл с тем же именем, что и функция в каталоге с именем заголовка. Например, <strong>strlen</strong> из <strong>string.h</strong> находится в <code>libc/string/strlen.c</code> и <strong>stat</strong> из <code>sys/stat.h</code> будет находиться в <code>libc/sys/stat/stat.c</code>.</p> <p>Стандартные заголовки используют BSD-подобную схему, где <code>sys/cdefs.h</code> объявляет кучу полезных макросов препроцессора, предназначенных для внутреннего использования стандартной библиотекой. Все прототипы функций завернуты в extern <code>&quot;C&quot; { ... }</code> и таким образом, что код C++ может правильно связываться с libc. Обратите также внимание, как компилятор предоставляет внутреннее ключевое слово <code>__restrict</code> (даже в режиме C89), что полезно для добавления ключевого слова <strong>restrict</strong> в прототипы функций даже при компиляции кода в режиме C99 или C++.</p> <p>Специальный макрос <strong>__is_libc</strong> позволяет исходному коду определить, является ли он частью libc, а <strong>__is_libk</strong> позволяет исходному коду определить, является ли он частью двоичного файла libk.</p> <p>Этот пример поставляется с небольшим количеством стандартных функций, которые служат для примера и выполнения требований ABI. Обратите внимание, что включенная функция printf очень минимальна и намеренно не обрабатывает большинство распространенных функций.</p> <h2 id="исходныи-код"><a href="#исходныи-код" class="header-anchor">#</a> Исходный код</h2> <p>Исходный код можно посмотреть и загрузить на странице: <a href="https://gitlab.com/sortie/meaty-skeleton.git" target="_blank" rel="noopener noreferrer">https://gitlab.com/sortie/meaty-skeleton.git<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h3 id="основные-фаилы-ядра"><a href="#основные-фаилы-ядра" class="header-anchor">#</a> Основные файлы ядра</h3> <details class="custom-block details"><summary>kernel/include/kernel/tty.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_KERNEL_TTY_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_KERNEL_TTY_H</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_initialize</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">terminal_putchar</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">terminal_write</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">terminal_writestring</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div><p><strong>kernel/Makefile</strong></p> <div class="language-makefile extra-class"><pre class="language-makefile"><code>DEFAULT_HOST<span class="token operator">!=</span>../default-host.sh
+HOST<span class="token operator">?=</span>DEFAULT_HOST
+HOSTARCH<span class="token operator">!=</span>../target-triplet-to-arch.sh <span class="token variable">$</span><span class="token punctuation">(</span>HOST<span class="token punctuation">)</span>
+
+CFLAGS<span class="token operator">?=</span>-O2 -g
+CPPFLAGS<span class="token operator">?=</span>
+LDFLAGS<span class="token operator">?=</span>
+LIBS<span class="token operator">?=</span>
+
+DESTDIR<span class="token operator">?=</span>
+PREFIX<span class="token operator">?=</span>/usr/local
+EXEC_PREFIX<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>PREFIX<span class="token punctuation">)</span>
+BOOTDIR<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>EXEC_PREFIX<span class="token punctuation">)</span>/boot
+INCLUDEDIR<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>PREFIX<span class="token punctuation">)</span>/<span class="token keyword">include</span>
+
+CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> -ffreestanding -Wall -Wextra
+CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span> -D__is_kernel -Iinclude
+LDFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LDFLAGS<span class="token punctuation">)</span>
+LIBS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBS<span class="token punctuation">)</span> -nostdlib -lk -lgcc
+
+ARCHDIR<span class="token operator">=</span>arch/<span class="token variable">$</span><span class="token punctuation">(</span>HOSTARCH<span class="token punctuation">)</span>
+
+<span class="token keyword">include</span> <span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/make.config
+
+CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_CFLAGS<span class="token punctuation">)</span>
+CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_CPPFLAGS<span class="token punctuation">)</span>
+LDFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LDFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_LDFLAGS<span class="token punctuation">)</span>
+LIBS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_LIBS<span class="token punctuation">)</span>
+
+KERNEL_OBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_OBJS<span class="token punctuation">)</span> \
+kernel/kernel.o \
+
+OBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crti.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtbegin.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_OBJS<span class="token punctuation">)</span> \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtend.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtn.o \
+
+LINK_LIST<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>LDFLAGS<span class="token punctuation">)</span> \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crti.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtbegin.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_OBJS<span class="token punctuation">)</span> \
+<span class="token variable">$</span><span class="token punctuation">(</span>LIBS<span class="token punctuation">)</span> \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtend.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/crtn.o \
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> all clean install install-headers install-kernel
+<span class="token builtin">.SUFFIXES</span><span class="token punctuation">:</span> .o .c .S
+
+<span class="token symbol">all</span><span class="token punctuation">:</span> myos.kernel
+
+<span class="token symbol">myos.kernel</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/linker.ld
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -T <span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/linker.ld -o <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LINK_LIST<span class="token punctuation">)</span>
+    grub-file --is-x86-multiboot myos.kernel
+
+<span class="token symbol"><span class="token variable">$</span>(ARCHDIR)/crtbegin.o <span class="token variable">$</span>(ARCHDIR)/crtend.o</span><span class="token punctuation">:</span>
+    OBJ<span class="token operator">=</span>`<span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LDFLAGS<span class="token punctuation">)</span> -print-file-name<span class="token operator">=</span><span class="token variable">$(@F)</span>` &amp;&amp; cp <span class="token string">&quot;$$OBJ&quot;</span> <span class="token variable">$@</span>
+
+<span class="token symbol">.c.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> -std<span class="token operator">=</span>gnu11 <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token builtin">.S.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+    rm -f myos.kernel
+    rm -f <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span> *.o */*.o */*/*.o
+<span class="token symbol">    rm -f <span class="token variable">$</span>(OBJS</span><span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span> *.d */*.d */*/*.d
+
+<span class="token symbol">install</span><span class="token punctuation">:</span> install-headers install-kernel
+
+<span class="token symbol">install-headers</span><span class="token punctuation">:</span>
+    mkdir -p <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>INCLUDEDIR<span class="token punctuation">)</span>
+    cp -R --preserve<span class="token operator">=</span>timestamps <span class="token keyword">include</span>/. <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>INCLUDEDIR<span class="token punctuation">)</span>/.
+
+<span class="token symbol">install-kernel</span><span class="token punctuation">:</span> myos.kernel
+    mkdir -p <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>BOOTDIR<span class="token punctuation">)</span>
+    cp myos.kernel <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>BOOTDIR<span class="token punctuation">)</span>
+
+<span class="token symbol">-include <span class="token variable">$</span>(OBJS</span><span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/kernel/kernel.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;kernel/tty.h&gt;</span></span>
+
+<span class="token keyword">void</span> <span class="token function">kernel_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">terminal_initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;Hello, kernel World!\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/tty.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;kernel/tty.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;vga.h&quot;</span></span>
+
+<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token class-name">size_t</span> VGA_WIDTH <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token class-name">size_t</span> VGA_HEIGHT <span class="token operator">=</span> <span class="token number">25</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token class-name">uint16_t</span><span class="token operator">*</span> <span class="token keyword">const</span> VGA_MEMORY <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token number">0xB8000</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token class-name">size_t</span> terminal_row<span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token class-name">size_t</span> terminal_column<span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token class-name">uint8_t</span> terminal_color<span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token class-name">uint16_t</span><span class="token operator">*</span> terminal_buffer<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_initialize</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    terminal_row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    terminal_column <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    terminal_color <span class="token operator">=</span> <span class="token function">vga_entry_color</span><span class="token punctuation">(</span>VGA_COLOR_LIGHT_GREY<span class="token punctuation">,</span> VGA_COLOR_BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    terminal_buffer <span class="token operator">=</span> VGA_MEMORY<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> VGA_HEIGHT<span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> VGA_WIDTH<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> <span class="token class-name">size_t</span> index <span class="token operator">=</span> y <span class="token operator">*</span> VGA_WIDTH <span class="token operator">+</span> x<span class="token punctuation">;</span>
+            terminal_buffer<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">,</span> terminal_color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_setcolor</span><span class="token punctuation">(</span><span class="token class-name">uint8_t</span> color<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    terminal_color <span class="token operator">=</span> color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_putentryat</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> color<span class="token punctuation">,</span> <span class="token class-name">size_t</span> x<span class="token punctuation">,</span> <span class="token class-name">size_t</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token class-name">size_t</span> index <span class="token operator">=</span> y <span class="token operator">*</span> VGA_WIDTH <span class="token operator">+</span> x<span class="token punctuation">;</span>
+    terminal_buffer<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_scroll</span><span class="token punctuation">(</span><span class="token keyword">int</span> line<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> loop<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> c<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>loop <span class="token operator">=</span> line <span class="token operator">*</span> <span class="token punctuation">(</span>VGA_WIDTH <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0xB8000</span><span class="token punctuation">;</span> loop <span class="token operator">&lt;</span> VGA_WIDTH <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span> loop<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        c <span class="token operator">=</span> <span class="token operator">*</span>loop<span class="token punctuation">;</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span>loop <span class="token operator">-</span> <span class="token punctuation">(</span>VGA_WIDTH <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">=</span> c<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_delete_last_line</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span>x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> VGA_WIDTH <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ptr <span class="token operator">=</span> <span class="token number">0xB8000</span> <span class="token operator">+</span> <span class="token punctuation">(</span>VGA_WIDTH <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>VGA_HEIGHT <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">+</span> x<span class="token punctuation">;</span>
+        <span class="token operator">*</span>ptr <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_putchar</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">int</span> line<span class="token punctuation">;</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">char</span> uc <span class="token operator">=</span> c<span class="token punctuation">;</span>
+
+    <span class="token function">terminal_putentryat</span><span class="token punctuation">(</span>uc<span class="token punctuation">,</span> terminal_color<span class="token punctuation">,</span> terminal_column<span class="token punctuation">,</span> terminal_row<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>terminal_column <span class="token operator">==</span> VGA_WIDTH<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        terminal_column <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>terminal_row <span class="token operator">==</span> VGA_HEIGHT<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span>line <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> line <span class="token operator">&lt;=</span> VGA_HEIGHT <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> line<span class="token operator">++</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                <span class="token function">terminal_scroll</span><span class="token punctuation">(</span>line<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token function">terminal_delete_last_line</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            terminal_row <span class="token operator">=</span> VGA_HEIGHT <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_write</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">terminal_putchar</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_writestring</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">terminal_write</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/crtn.S</summary> <div class="language-nasm extra-class"><pre class="language-nasm"><code>.section .init
+    <span class="token operator">/</span><span class="token operator">*</span> gcc красиво разместит здесь содержимое раздела crtend.o .init. <span class="token operator">*</span><span class="token operator">/</span>
+    popl <span class="token operator">%</span><span class="token register variable">ebp</span>
+    ret
+
+.section .fini
+    <span class="token operator">/</span><span class="token operator">*</span> gcc красиво разместит здесь содержимое раздела crtend.o .fini. <span class="token operator">*</span><span class="token operator">/</span>
+    popl <span class="token operator">%</span><span class="token register variable">ebp</span>
+    ret
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/vga.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">ARCH_I386_VGA_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">ARCH_I386_VGA_H</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h&gt;</span></span>
+
+<span class="token keyword">enum</span> <span class="token class-name">vga_color</span> <span class="token punctuation">{</span>
+    VGA_COLOR_BLACK <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    VGA_COLOR_BLUE <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    VGA_COLOR_GREEN <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    VGA_COLOR_CYAN <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    VGA_COLOR_RED <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">,</span>
+    VGA_COLOR_MAGENTA <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    VGA_COLOR_BROWN <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_GREY <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">,</span>
+    VGA_COLOR_DARK_GREY <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_BLUE <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_GREEN <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_CYAN <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_RED <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_MAGENTA <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_BROWN <span class="token operator">=</span> <span class="token number">14</span><span class="token punctuation">,</span>
+    VGA_COLOR_WHITE <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token class-name">uint8_t</span> <span class="token function">vga_entry_color</span><span class="token punctuation">(</span><span class="token keyword">enum</span> <span class="token class-name">vga_color</span> fg<span class="token punctuation">,</span> <span class="token keyword">enum</span> <span class="token class-name">vga_color</span> bg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> fg <span class="token operator">|</span> bg <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token class-name">uint16_t</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> uc<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> color<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token punctuation">)</span> uc <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token punctuation">)</span> color <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/make.config</summary> <div class="language-makefile extra-class"><pre class="language-makefile"><code>KERNEL_ARCH_CFLAGS<span class="token operator">=</span>
+KERNEL_ARCH_CPPFLAGS<span class="token operator">=</span>
+KERNEL_ARCH_LDFLAGS<span class="token operator">=</span>
+KERNEL_ARCH_LIBS<span class="token operator">=</span>
+
+KERNEL_ARCH_OBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/boot.o \
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/tty.o \
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/crti.S</summary> <div class="language-nasm extra-class"><pre class="language-nasm"><code>.section .init
+.<span class="token keyword">global _init</span>
+.type _init, @function
+<span class="token label function">_init:</span>
+    push <span class="token operator">%</span><span class="token register variable">ebp</span>
+    movl <span class="token operator">%</span><span class="token register variable">esp</span>, <span class="token operator">%</span><span class="token register variable">ebp</span>
+    <span class="token operator">/</span><span class="token operator">*</span> gcc красиво разместит здесь содержимое раздела crtbegin.o .init. <span class="token operator">*</span><span class="token operator">/</span>
+
+.section .fini
+.<span class="token keyword">global _fini</span>
+.type _fini, @function
+<span class="token label function">_fini:</span>
+    push <span class="token operator">%</span><span class="token register variable">ebp</span>
+    movl <span class="token operator">%</span><span class="token register variable">esp</span>, <span class="token operator">%</span><span class="token register variable">ebp</span>
+    <span class="token operator">/</span><span class="token operator">*</span> gcc красиво разместит здесь содержимое раздела crtbegin.o .fini. <span class="token operator">*</span><span class="token operator">/</span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/linker.ld</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* Загрузчик посмотрит на этот образ и начнет выполнение с символа, обозначенного в точке входа. */</span>
+<span class="token function">ENTRY</span><span class="token punctuation">(</span>_start<span class="token punctuation">)</span>
+
+<span class="token comment">/* Укажите, где различные секции объектных файлов будут помещены в окончательный образ ядра. */</span>
+SECTIONS
+<span class="token punctuation">{</span>
+    <span class="token comment">/* Начнём размещать секции в 1 Мбайт, обычное место для загрузки ядро загрузчиком. */</span>
+    <span class="token punctuation">.</span> <span class="token operator">=</span> <span class="token number">1</span>M<span class="token punctuation">;</span>
+
+    <span class="token comment">/* Сначала поместим заголовок multiboot, так как он должен быть помещен очень рано в образ, иначе загрузчик не распознает формат файла. Далее мы поместим раздел .text. */</span>
+    <span class="token punctuation">.</span>text <span class="token function">BLOCK</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ALIGN</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">.</span>multiboot<span class="token punctuation">)</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">.</span>text<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/* Данные только для чтения */</span>
+    <span class="token punctuation">.</span>rodata <span class="token function">BLOCK</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ALIGN</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">.</span>rodata<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/* Данные для чтения и записи (инициализированы) */</span>
+    <span class="token punctuation">.</span>data <span class="token function">BLOCK</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ALIGN</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/* Чтение-запись данных (неинициализированных) и стек */</span>
+    <span class="token punctuation">.</span>bss <span class="token function">BLOCK</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">ALIGN</span><span class="token punctuation">(</span><span class="token number">4</span>K<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span>COMMON<span class="token punctuation">)</span>
+        <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">.</span>bss<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">/* Компилятор может создать другие разделы и помещать их в нужное место в этом файле, если вы хотите включить их в окончательное ядро. */</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/arch/i386/boot.S</summary> <div class="language-nasm extra-class"><pre class="language-nasm"><code># Обявление констант для заголовка multiboot.
+.set ALIGN,    <span class="token number">1</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token number">0</span>             # выравнивание загруженных модулей по границам страниц
+.set MEMINFO,  <span class="token number">1</span><span class="token operator">&lt;</span><span class="token operator">&lt;</span><span class="token number">1</span>             # предоставление карты памяти
+.set FLAGS,    ALIGN <span class="token operator">|</span> MEMINFO  # это поле мультизагрузочного флага
+.set MAGIC,    <span class="token number">0x1BADB002</span>       # это магическое число поможет загрузчику найти заголовок
+.set CHECKSUM, <span class="token operator">-</span>(MAGIC <span class="token operator">+</span> FLAGS) # контрольная сумма выше, чтобы доказать, что мы можем включить multiboot
+
+# Объявление заголовков Multiboot Standard.
+.section .multiboot
+.align <span class="token number">4</span>
+.long MAGIC
+.long FLAGS
+.long CHECKSUM
+
+# Резервирование стека для первоначального потока
+.section .bss
+.align <span class="token number">16</span>
+<span class="token label function">stack_bottom:</span>
+.skip <span class="token number">16384</span> # <span class="token number">16</span> KiB
+<span class="token label function">stack_top:</span>
+
+# Входная точка в ядро
+.section .text
+.<span class="token keyword">global _start</span>
+.type _start, @function
+<span class="token label function">_start:</span>
+    movl <span class="token operator">$</span>stack_top, <span class="token operator">%</span><span class="token register variable">esp</span>
+
+    # Вызов глобальных конструкторов
+    call _init
+
+    # Передача управления ядру
+    call kernel_main
+
+    # Зависнуть если kernel_main вернёт результат
+    cli
+<span class="token number">1</span>:	hlt
+    jmp <span class="token number">1b</span>
+.size _start, . <span class="token operator">-</span> _start
+</code></pre></div></details> <details class="custom-block details"><summary>kernel/.gitignore</summary> <div class="language-gitignore extra-class"><pre class="language-gitignore"><code><span class="token entry string"><span class="token operator">*</span>.d</span>
+<span class="token entry string"><span class="token operator">*</span>.kernel</span>
+<span class="token entry string"><span class="token operator">*</span>.o</span>
+</code></pre></div></details> <h3 id="libc-и-libk"><a href="#libc-и-libk" class="header-anchor">#</a> libc и libk</h3> <details class="custom-block details"><summary>libc/include/string.h</summary> <div class="language-c extra-class"><pre class="language-c"><code>ifndef _STRING_H
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_STRING_H</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/cdefs.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token keyword">extern</span> <span class="token string">&quot;C&quot;</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token keyword">int</span> <span class="token function">memcmp</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memcpy</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> __restrict<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> __restrict<span class="token punctuation">,</span> <span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memmove</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memset</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token class-name">size_t</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">size_t</span> <span class="token function">strlen</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/include/stdio.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_STDIO_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_STDIO_H</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/cdefs.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">EOF</span> <span class="token expression"><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token keyword">extern</span> <span class="token string">&quot;C&quot;</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token keyword">int</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> __restrict<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">putchar</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/include/sys/cdefs.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_SYS_CDEFS_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_SYS_CDEFS_H</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__myos_libc</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/include/stdlib.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_STDLIB_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_STDLIB_H</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/cdefs.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token keyword">extern</span> <span class="token string">&quot;C&quot;</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token keyword">__attribute__</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__noreturn__<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/include/stdlib.h</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_STDLIB_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_STDLIB_H</span> <span class="token expression"><span class="token number">1</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/cdefs.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token keyword">extern</span> <span class="token string">&quot;C&quot;</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token keyword">__attribute__</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__noreturn__<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifdef</span> <span class="token expression">__cplusplus</span></span>
+<span class="token punctuation">}</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/Makefile</summary> <div class="language-makefile extra-class"><pre class="language-makefile"><code>DEFAULT_HOST<span class="token operator">!=</span>../default-host.sh
+HOST<span class="token operator">?=</span>DEFAULT_HOST
+HOSTARCH<span class="token operator">!=</span>../target-triplet-to-arch.sh <span class="token variable">$</span><span class="token punctuation">(</span>HOST<span class="token punctuation">)</span>
+
+CFLAGS<span class="token operator">?=</span>-O2 -g
+CPPFLAGS<span class="token operator">?=</span>
+LDFLAGS<span class="token operator">?=</span>
+LIBS<span class="token operator">?=</span>
+
+DESTDIR<span class="token operator">?=</span>
+PREFIX<span class="token operator">?=</span>/usr/local
+EXEC_PREFIX<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>PREFIX<span class="token punctuation">)</span>
+INCLUDEDIR<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>PREFIX<span class="token punctuation">)</span>/<span class="token keyword">include</span>
+LIBDIR<span class="token operator">?=</span><span class="token variable">$</span><span class="token punctuation">(</span>EXEC_PREFIX<span class="token punctuation">)</span>/lib
+
+CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> -ffreestanding -Wall -Wextra
+CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span> -D__is_libc -Iinclude
+LIBK_CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span>
+LIBK_CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span> -D__is_libk
+
+ARCHDIR<span class="token operator">=</span>arch/<span class="token variable">$</span><span class="token punctuation">(</span>HOSTARCH<span class="token punctuation">)</span>
+
+<span class="token keyword">include</span> <span class="token variable">$</span><span class="token punctuation">(</span>ARCHDIR<span class="token punctuation">)</span>/make.config
+
+CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>ARCH_CFLAGS<span class="token punctuation">)</span>
+CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>ARCH_CPPFLAGS<span class="token punctuation">)</span>
+LIBK_CFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_CFLAGS<span class="token punctuation">)</span>
+LIBK_CPPFLAGS<span class="token operator">:=</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CPPFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>KERNEL_ARCH_CPPFLAGS<span class="token punctuation">)</span>
+
+FREEOBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCH_FREEOBJS<span class="token punctuation">)</span> \
+stdio/printf.o \
+stdio/putchar.o \
+stdio/puts.o \
+stdlib/abort.o \
+string/memcmp.o \
+string/memcpy.o \
+string/memmove.o \
+string/memset.o \
+string/strlen.o \
+
+HOSTEDOBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>ARCH_HOSTEDOBJS<span class="token punctuation">)</span> \
+
+OBJS<span class="token operator">=</span>\
+<span class="token variable">$</span><span class="token punctuation">(</span>FREEOBJS<span class="token punctuation">)</span> \
+<span class="token variable">$</span><span class="token punctuation">(</span>HOSTEDOBJS<span class="token punctuation">)</span> \
+
+LIBK_OBJS<span class="token operator">=</span><span class="token variable">$</span><span class="token punctuation">(</span>FREEOBJS<span class="token punctuation">:</span>.o<span class="token operator">=</span>.libk.o<span class="token punctuation">)</span>
+
+<span class="token comment">#BINARIES=libc.a libk.a</span>
+BINARIES<span class="token operator">=</span>libk.a
+
+<span class="token builtin">.PHONY</span><span class="token punctuation">:</span> all clean install install-headers install-libs
+<span class="token builtin">.SUFFIXES</span><span class="token punctuation">:</span> .o .libk.o .c .S
+
+<span class="token symbol">all</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>BINARIES<span class="token punctuation">)</span>
+
+<span class="token symbol">libc.a</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>AR<span class="token punctuation">)</span> rcs <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span>
+
+<span class="token symbol">libk.a</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_OBJS<span class="token punctuation">)</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>AR<span class="token punctuation">)</span> rcs <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_OBJS<span class="token punctuation">)</span>
+
+<span class="token symbol">.c.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> -std<span class="token operator">=</span>gnu11 <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token builtin">.S.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token symbol">.c.libk.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> -std<span class="token operator">=</span>gnu11 <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token builtin">.S.libk.o</span><span class="token punctuation">:</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -MD -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CFLAGS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_CPPFLAGS<span class="token punctuation">)</span>
+
+<span class="token symbol">clean</span><span class="token punctuation">:</span>
+    rm -f <span class="token variable">$</span><span class="token punctuation">(</span>BINARIES<span class="token punctuation">)</span> *.a
+    rm -f <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_OBJS<span class="token punctuation">)</span> *.o */*.o */*/*.o
+<span class="token symbol">    rm -f <span class="token variable">$</span>(OBJS</span><span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>LIBK_OBJS<span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span> *.d */*.d */*/*.d
+
+<span class="token symbol">install</span><span class="token punctuation">:</span> install-headers install-libs
+
+<span class="token symbol">install-headers</span><span class="token punctuation">:</span>
+    mkdir -p <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>INCLUDEDIR<span class="token punctuation">)</span>
+    cp -R --preserve<span class="token operator">=</span>timestamps <span class="token keyword">include</span>/. <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>INCLUDEDIR<span class="token punctuation">)</span>/.
+
+<span class="token symbol">install-libs</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>BINARIES<span class="token punctuation">)</span>
+    mkdir -p <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBDIR<span class="token punctuation">)</span>
+    cp <span class="token variable">$</span><span class="token punctuation">(</span>BINARIES<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>DESTDIR<span class="token punctuation">)</span><span class="token variable">$</span><span class="token punctuation">(</span>LIBDIR<span class="token punctuation">)</span>
+
+<span class="token symbol">-include <span class="token variable">$</span>(OBJS</span><span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span>
+<span class="token symbol">-include <span class="token variable">$</span>(LIBK_OBJS</span><span class="token punctuation">:</span>.o<span class="token operator">=</span>.d<span class="token punctuation">)</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/stdlib/abort.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+
+<span class="token keyword">__attribute__</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__noreturn__<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">abort</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token function">defined</span><span class="token punctuation">(</span>__is_libk<span class="token punctuation">)</span></span></span>
+    <span class="token comment">// TODO: добавить нормальный кернел паник</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;kernel: panic: abort()\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+    <span class="token comment">// TODO: добавить нормальное завершение процесса как через SIGABRT.</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;abort()\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span>
+    <span class="token function">__builtin_unreachable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/string/memmove.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memmove</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> dstptr<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> srcptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> dst <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> dstptr<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> src <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> srcptr<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>dst <span class="token operator">&lt;</span> src<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+            dst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> src<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> size<span class="token punctuation">;</span> i <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+            dst<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> src<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> dstptr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/string/strlen.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token class-name">size_t</span> <span class="token function">strlen</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">size_t</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>str<span class="token punctuation">[</span>len<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        len<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> len<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/string/memcmp.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">memcmp</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> aptr<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> bptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> aptr<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> b <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> bptr<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/string/memset.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memset</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> bufptr<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> buf <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> bufptr<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        buf<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token punctuation">)</span> value<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> bufptr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/string/memcpy.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">memcpy</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> restrict dstptr<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">void</span><span class="token operator">*</span> restrict srcptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> dst <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> dstptr<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> src <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> srcptr<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        dst<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> src<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> dstptr<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/stdio/puts.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">puts</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> string<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">&quot;%s\n&quot;</span><span class="token punctuation">,</span> string<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/stdio/putchar.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token function">defined</span><span class="token punctuation">(</span>__is_libk<span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;kernel/tty.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token keyword">int</span> <span class="token function">putchar</span><span class="token punctuation">(</span><span class="token keyword">int</span> ic<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token function">defined</span><span class="token punctuation">(</span>__is_libk<span class="token punctuation">)</span></span></span>
+    <span class="token keyword">char</span> c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> ic<span class="token punctuation">;</span>
+    <span class="token function">terminal_write</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+    <span class="token comment">// TODO: реализовать stdio и системный вызов write.</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+    <span class="token keyword">return</span> ic<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/stdio/printf.c</summary> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;limits.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdarg.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string.h&gt;</span></span>
+
+<span class="token keyword">static</span> bool <span class="token function">print</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">,</span> <span class="token class-name">size_t</span> length<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span> bytes <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">unsigned</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span> data<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">putchar</span><span class="token punctuation">(</span>bytes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">EOF</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> restrict format<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    va_list parameters<span class="token punctuation">;</span>
+    <span class="token function">va_start</span><span class="token punctuation">(</span>parameters<span class="token punctuation">,</span> format<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> written <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">*</span>format <span class="token operator">!=</span> <span class="token string">'\0'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">size_t</span> maxrem <span class="token operator">=</span> INT_MAX <span class="token operator">-</span> written<span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>format<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">'%'</span> <span class="token operator">||</span> format<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'%'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>format<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">'%'</span><span class="token punctuation">)</span>
+                format<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token class-name">size_t</span> amount <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token keyword">while</span> <span class="token punctuation">(</span>format<span class="token punctuation">[</span>amount<span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> format<span class="token punctuation">[</span>amount<span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">'%'</span><span class="token punctuation">)</span>
+                amount<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>maxrem <span class="token operator">&lt;</span> amount<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// TODO: установить значение errno в EOVERFLOW.</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">print</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> amount<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            format <span class="token operator">+=</span> amount<span class="token punctuation">;</span>
+            written <span class="token operator">+=</span> amount<span class="token punctuation">;</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> format_begun_at <span class="token operator">=</span> format<span class="token operator">++</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>format <span class="token operator">==</span> <span class="token string">'c'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            format<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">char</span> c <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span><span class="token punctuation">)</span> <span class="token function">va_arg</span><span class="token punctuation">(</span>parameters<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token comment">/* char promotes to int */</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>maxrem<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// TODO: установить значение errno в EOVERFLOW.</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            written<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>format <span class="token operator">==</span> <span class="token string">'s'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            format<span class="token operator">++</span><span class="token punctuation">;</span>
+            <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> str <span class="token operator">=</span> <span class="token function">va_arg</span><span class="token punctuation">(</span>parameters<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">size_t</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>maxrem <span class="token operator">&lt;</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// TODO: установить значение errno в EOVERFLOW.</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">print</span><span class="token punctuation">(</span>str<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            written <span class="token operator">+=</span> len<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+            format <span class="token operator">=</span> format_begun_at<span class="token punctuation">;</span>
+            <span class="token class-name">size_t</span> len <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>format<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>maxrem <span class="token operator">&lt;</span> len<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token comment">// TODO: установить значение errno в EOVERFLOW.</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">print</span><span class="token punctuation">(</span>format<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+            written <span class="token operator">+=</span> len<span class="token punctuation">;</span>
+            format <span class="token operator">+=</span> len<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token function">va_end</span><span class="token punctuation">(</span>parameters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> written<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></details> <details class="custom-block details"><summary>libc/arch/i386/make.config</summary> <div class="language-makefile extra-class"><pre class="language-makefile"><code>ARCH_CFLAGS<span class="token operator">=</span>
+ARCH_CPPFLAGS<span class="token operator">=</span>
+KERNEL_ARCH_CFLAGS<span class="token operator">=</span>
+KERNEL_ARCH_CPPFLAGS<span class="token operator">=</span>
+
+ARCH_FREEOBJS<span class="token operator">=</span>\
+
+ARCH_HOSTEDOBJS<span class="token operator">=</span>\
+</code></pre></div></details> <details class="custom-block details"><summary>libc/.gitignore</summary> <div class="language-gitignore extra-class"><pre class="language-gitignore"><code><span class="token entry string"><span class="token operator">*</span>.a</span>
+<span class="token entry string"><span class="token operator">*</span>.d</span>
+<span class="token entry string"><span class="token operator">*</span>.o</span>
+</code></pre></div></details> <h3 id="дополнительные-фаилы"><a href="#дополнительные-фаилы" class="header-anchor">#</a> Дополнительные файлы</h3> <p>Все эти файлы находятся в корневой директории</p> <details class="custom-block details"><summary>build.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">set</span> -e
+<span class="token builtin class-name">.</span> ./headers.sh
+
+<span class="token keyword">for</span> <span class="token for-or-select variable">PROJECT</span> <span class="token keyword">in</span> <span class="token variable">$PROJECTS</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+  <span class="token punctuation">(</span>cd <span class="token variable">$PROJECT</span> <span class="token operator">&amp;&amp;</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$SYSROOT</span>&quot;</span> <span class="token variable">$MAKE</span> <span class="token function">install</span><span class="token punctuation">)</span>
+<span class="token keyword">done</span>
+</code></pre></div></details> <details class="custom-block details"><summary>clean.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">set</span> -e
+<span class="token builtin class-name">.</span> ./config.sh
+
+<span class="token keyword">for</span> <span class="token for-or-select variable">PROJECT</span> <span class="token keyword">in</span> <span class="token variable">$PROJECTS</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+  <span class="token punctuation">(</span>cd <span class="token variable">$PROJECT</span> <span class="token operator">&amp;&amp;</span> <span class="token variable">$MAKE</span> clean<span class="token punctuation">)</span>
+<span class="token keyword">done</span>
+
+<span class="token function">rm</span> -rf sysroot
+<span class="token function">rm</span> -rf isodir
+<span class="token function">rm</span> -rf myos.iso
+</code></pre></div></details> <details class="custom-block details"><summary>config.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token assign-left variable">SYSTEM_HEADER_PROJECTS</span><span class="token operator">=</span><span class="token string">&quot;libc kernel&quot;</span>
+<span class="token assign-left variable">PROJECTS</span><span class="token operator">=</span><span class="token string">&quot;libc kernel&quot;</span>
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">MAKE</span><span class="token operator">=</span><span class="token variable">${MAKE<span class="token operator">:-</span>make}</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">HOST</span><span class="token operator">=</span><span class="token variable">${HOST<span class="token operator">:-</span>$(.<span class="token operator">/</span>default-host.sh)}</span>
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">AR</span><span class="token operator">=</span><span class="token variable">${HOST}</span>-ar
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">AS</span><span class="token operator">=</span><span class="token variable">${HOST}</span>-as
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CC</span><span class="token operator">=</span><span class="token variable">${HOST}</span>-gcc
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">PREFIX</span><span class="token operator">=</span>/usr
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">EXEC_PREFIX</span><span class="token operator">=</span><span class="token variable">$PREFIX</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">BOOTDIR</span><span class="token operator">=</span>/boot
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">LIBDIR</span><span class="token operator">=</span><span class="token variable">$EXEC_PREFIX</span>/lib
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">INCLUDEDIR</span><span class="token operator">=</span><span class="token variable">$PREFIX</span>/include
+
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CFLAGS</span><span class="token operator">=</span><span class="token string">'-O2 -g'</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CPPFLAGS</span><span class="token operator">=</span><span class="token string">''</span>
+
+<span class="token comment"># Настройка кросс-компилятора для использования sysroot</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">SYSROOT</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable"><span class="token variable">$(</span><span class="token builtin class-name">pwd</span><span class="token variable">)</span></span>/sysroot&quot;</span>
+<span class="token builtin class-name">export</span> <span class="token assign-left variable">CC</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$CC</span> --sysroot=<span class="token variable">$SYSROOT</span>&quot;</span>
+
+<span class="token keyword">if</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;<span class="token variable">$HOST</span>&quot;</span> <span class="token operator">|</span> <span class="token function">grep</span> -Eq -- <span class="token string">'-elf($|-)'</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">CC</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$CC</span> -isystem=<span class="token variable">$INCLUDEDIR</span>&quot;</span>
+<span class="token keyword">fi</span>
+</code></pre></div></details> <details class="custom-block details"><summary>default-host.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">echo</span> i686-elf
+</code></pre></div></details> <details class="custom-block details"><summary>headers.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">set</span> -e
+<span class="token builtin class-name">.</span> ./config.sh
+
+<span class="token function">mkdir</span> -p <span class="token string">&quot;<span class="token variable">$SYSROOT</span>&quot;</span>
+
+<span class="token keyword">for</span> <span class="token for-or-select variable">PROJECT</span> <span class="token keyword">in</span> <span class="token variable">$SYSTEM_HEADER_PROJECTS</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+  <span class="token punctuation">(</span>cd <span class="token variable">$PROJECT</span> <span class="token operator">&amp;&amp;</span> <span class="token assign-left variable">DESTDIR</span><span class="token operator">=</span><span class="token string">&quot;<span class="token variable">$SYSROOT</span>&quot;</span> <span class="token variable">$MAKE</span> install-headers<span class="token punctuation">)</span>
+<span class="token keyword">done</span>
+</code></pre></div></details> <details class="custom-block details"><summary>iso.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">set</span> -e
+<span class="token builtin class-name">.</span> ./build.sh
+
+<span class="token function">mkdir</span> -p isodir
+<span class="token function">mkdir</span> -p isodir/boot
+<span class="token function">mkdir</span> -p isodir/boot/grub
+
+<span class="token function">cp</span> sysroot/boot/myos.kernel isodir/boot/myos.kernel
+<span class="token function">cat</span> <span class="token operator">&gt;</span> isodir/boot/grub/grub.cfg <span class="token operator">&lt;&lt;</span> <span class="token string">EOF
+menuentry &quot;myos&quot; {
+    multiboot /boot/myos.kernel
+}
+EOF</span>
+grub-mkrescue -o myos.iso isodir
+</code></pre></div></details> <details class="custom-block details"><summary>qemu.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token builtin class-name">set</span> -e
+<span class="token builtin class-name">.</span> ./iso.sh
+
+qemu-system-<span class="token variable"><span class="token variable">$(</span>./target-triplet-to-arch.sh $HOST<span class="token variable">)</span></span> -cdrom myos.iso
+</code></pre></div></details> <details class="custom-block details"><summary>target-triplet-to-arch.sh</summary> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token shebang important">#!/bin/sh</span>
+<span class="token keyword">if</span> <span class="token builtin class-name">echo</span> <span class="token string">&quot;<span class="token variable">$1</span>&quot;</span> <span class="token operator">|</span> <span class="token function">grep</span> -Eq <span class="token string">'i[[:digit:]]86-'</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+  <span class="token builtin class-name">echo</span> i386
+<span class="token keyword">else</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">&quot;<span class="token variable">$1</span>&quot;</span> <span class="token operator">|</span> <span class="token function">grep</span> -Eo <span class="token string">'^[[:alnum:]_]*'</span>
+<span class="token keyword">fi</span>
+</code></pre></div></details> <details class="custom-block details"><summary>.gitignore</summary> <div class="language-gitignore extra-class"><pre class="language-gitignore"><code><span class="token entry string"><span class="token operator">*</span>.iso</span>
+<span class="token entry string">isodir</span>
+<span class="token entry string">sysroot</span>
+</code></pre></div></details> <p>Не забудьте дать скриптам права для их выполнения:</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">chmod</span> +x *.sh
+</code></pre></div><h2 id="порядок-выполнения-скриптов"><a href="#порядок-выполнения-скриптов" class="header-anchor">#</a> Порядок выполнения скриптов</h2> <ul><li>./clean.sh - очищаем сборку;</li> <li>./headers.sh - устанавливаем системные заголовки;</li> <li>./iso.sh - собираем ISO-образ;</li> <li>./qemu.sh - запускаем ОС через эмулятор QEMU.</li></ul></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/osdev/assets/js/app.6d4e7c16.js" defer></script><script src="/osdev/assets/js/2.d8a8b755.js" defer></script><script src="/osdev/assets/js/24.e3d90789.js" defer></script>
+  </body>
+</html>

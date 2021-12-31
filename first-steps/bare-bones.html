@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Голое железо | Разработка ОС</title>
+    <meta name="generator" content="VuePress 1.9.5">
+    
+    <meta name="description" content="osdev.org на русском">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/osdev/assets/css/0.styles.cf6cd58c.css" as="style"><link rel="preload" href="/osdev/assets/js/app.6d4e7c16.js" as="script"><link rel="preload" href="/osdev/assets/js/2.d8a8b755.js" as="script"><link rel="preload" href="/osdev/assets/js/7.5089196a.js" as="script"><link rel="prefetch" href="/osdev/assets/js/10.f52dfc28.js"><link rel="prefetch" href="/osdev/assets/js/11.62d004c8.js"><link rel="prefetch" href="/osdev/assets/js/12.de6a66d3.js"><link rel="prefetch" href="/osdev/assets/js/13.5ce18855.js"><link rel="prefetch" href="/osdev/assets/js/14.2418957f.js"><link rel="prefetch" href="/osdev/assets/js/15.c118d926.js"><link rel="prefetch" href="/osdev/assets/js/16.d7ace87c.js"><link rel="prefetch" href="/osdev/assets/js/17.ed033aaf.js"><link rel="prefetch" href="/osdev/assets/js/18.fd5dcd0e.js"><link rel="prefetch" href="/osdev/assets/js/19.401c7b19.js"><link rel="prefetch" href="/osdev/assets/js/20.69a7aab0.js"><link rel="prefetch" href="/osdev/assets/js/21.aa99a090.js"><link rel="prefetch" href="/osdev/assets/js/22.21e5a0d1.js"><link rel="prefetch" href="/osdev/assets/js/23.25b4c5a4.js"><link rel="prefetch" href="/osdev/assets/js/24.e3d90789.js"><link rel="prefetch" href="/osdev/assets/js/25.f01e693e.js"><link rel="prefetch" href="/osdev/assets/js/3.9d834bc1.js"><link rel="prefetch" href="/osdev/assets/js/4.15995e12.js"><link rel="prefetch" href="/osdev/assets/js/5.3392b390.js"><link rel="prefetch" href="/osdev/assets/js/6.a16b59c6.js"><link rel="prefetch" href="/osdev/assets/js/8.83af78e0.js"><link rel="prefetch" href="/osdev/assets/js/9.f2730610.js">
+    <link rel="stylesheet" href="/osdev/assets/css/0.styles.cf6cd58c.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/osdev/" class="home-link router-link-active"><!----> <span class="site-name">Разработка ОС</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/osdev/intro/" class="nav-link">
+  Введение
+</a></div><div class="nav-item"><a href="/osdev/teapot/" class="nav-link">
+  Гайд для чайников
+</a></div><div class="nav-item"><a href="/osdev/hardware/" class="nav-link">
+  Аппаратная часть
+</a></div><div class="nav-item"><a href="/osdev/os/" class="nav-link">
+  Конструкция ОС
+</a></div><div class="nav-item"><a href="/osdev/resources/" class="nav-link">
+  Ресурсы
+</a></div><div class="nav-item"><a href="/osdev/reference/" class="nav-link">
+  Справочная информация
+</a></div><div class="nav-item"><a href="/osdev/tools/" class="nav-link">
+  Утилиты
+</a></div><div class="nav-item"><a href="https://wiki.osdev.org/Main_Page" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Оригинал
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/osdev/intro/" class="nav-link">
+  Введение
+</a></div><div class="nav-item"><a href="/osdev/teapot/" class="nav-link">
+  Гайд для чайников
+</a></div><div class="nav-item"><a href="/osdev/hardware/" class="nav-link">
+  Аппаратная часть
+</a></div><div class="nav-item"><a href="/osdev/os/" class="nav-link">
+  Конструкция ОС
+</a></div><div class="nav-item"><a href="/osdev/resources/" class="nav-link">
+  Ресурсы
+</a></div><div class="nav-item"><a href="/osdev/reference/" class="nav-link">
+  Справочная информация
+</a></div><div class="nav-item"><a href="/osdev/tools/" class="nav-link">
+  Утилиты
+</a></div><div class="nav-item"><a href="https://wiki.osdev.org/Main_Page" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Оригинал
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/mayerdev/osdev" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Введение</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/osdev/intro/" class="sidebar-link">Главная</a></li><li><a href="/osdev/intro/required.html" class="sidebar-link">Необходимые знания</a></li><li><a href="/osdev/intro/mistakes.html" class="sidebar-link">Ошибки начинающих</a></li><li><a href="/osdev/intro/getting-started.html" class="sidebar-link">Начало работы</a></li><li><a href="/osdev/intro/kcl-linking.html" class="sidebar-link">Как ядро, компилятор и код на C работают вместе</a></li><li><a href="/osdev/intro/isr.html" class="sidebar-link">Обработка прерываний</a></li><li><a href="/osdev/intro/languages.html" class="sidebar-link">Языки программирования</a></li><li><a href="/osdev/intro/uefi.html" class="sidebar-link">UEFI</a></li><li><a href="/osdev/intro/bios.html" class="sidebar-link">BIOS</a></li><li><a href="/osdev/intro/inline-asm.html" class="sidebar-link">Встроенная сборка</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Первые шаги</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/osdev/first-steps/bare-bones.html" aria-current="page" class="active sidebar-link">Голое железо</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#настроика-кросс-компилятора" class="sidebar-link">Настройка кросс-компилятора</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#обзор" class="sidebar-link">Обзор</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#загружаем-ядро-ос" class="sidebar-link">Загружаем ядро ОС</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#реализация-ядра" class="sidebar-link">Реализация ядра</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#компоновка-ядра" class="sidebar-link">Компоновка ядра</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#проверяем-ядро" class="sidebar-link">Проверяем ядро</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#что-дальше" class="sidebar-link">Что дальше?</a></li><li class="sidebar-sub-header"><a href="/osdev/first-steps/bare-bones.html#частые-вопросы" class="sidebar-link">Частые вопросы</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="голое-железо"><a href="#голое-железо" class="header-anchor">#</a> Голое железо</h1> <p>В этом туториале мы напишем простое 32х-битное ядро и загрузим его. Это первый шаг в создании вашей операционной системы. Здесь вы узнаете как создать минимальную систему, но не как нужно структурировать ваш проект.</p> <h2 id="настроика-кросс-компилятора"><a href="#настроика-кросс-компилятора" class="header-anchor">#</a> Настройка кросс-компилятора</h2> <p>Первым делом вам необходимо настроить GCC для i686-elf. Вы еще не модифицировали свой компилятор, чтобы дать ему знать о существовании вашей операционной системы, поэтому мы будем использовать стандартную сборку под i686-elf, который предоставляет инструменты для System V ABI.</p> <p>Вы <strong>не сможете</strong> правильную сборку вашей ОС без кросс-компилятора.</p> <p>Вы <strong>не сможете</strong> корректно завершить этот туториал с x86_64-elf, потому что GRUB способен загружать только 32х-битные <a href="https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0" target="_blank" rel="noopener noreferrer">мультизагрузочные<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> ядра. Если это ваша первая ОС, то следует начать с 32х-битного ядра.</p> <h2 id="обзор"><a href="#обзор" class="header-anchor">#</a> Обзор</h2> <p>Теперь вам понадобится три входных файлов:</p> <ul><li><code>boot.s</code> - точка входа ядра, которая настроит среду процессора,</li> <li><code>kernel.c</code> - код вашего ядра,</li> <li><code>linker.ld</code> - информация компоновки файлов выше.</li></ul> <h2 id="загружаем-ядро-ос"><a href="#загружаем-ядро-ос" class="header-anchor">#</a> Загружаем ядро ОС</h2> <p>Для запуска ОС необходимо иметь ПО, которое сможет загрузить её. Такое ПО называют <em>загрузчиками</em>, мы будем использовать GRUB. Ядро получает от загрузчика минимальную среду, в которой ещё не настроен стек, виртуальная память, подключенные устройства и так далее.</p> <p>Чтобы сообщить загрузчику как загрузить ОС будем использовать стандарт мультизагрузки, который описывает простой интерфейс между загрузчиком и ядром. Это работает благодаря глобальным переменным, которые ищет загрузчик.</p> <p>В этом примере используется ассемблер GNU, который является частью кросс-компилятора, настроенного ранее.</p> <div class="language-gs extra-class"><pre class="language-text"><code>/* Объявляем содержимое нашего заголовка. */
+.set ALIGN,    1&lt;&lt;0             /* выравнивать загруженные модули по границам страницы */
+.set MEMINFO,  1&lt;&lt;1             /* предоставлять карту памяти (memory map) */
+.set FLAGS,    ALIGN | MEMINFO  /* это поле &quot;флаги&quot; заголовка */
+.set MAGIC,    0x1BADB002       /* &quot;волшебное&quot; число, позволяющее загрузчику найти заголовок */
+.set CHECKSUM, -(MAGIC + FLAGS) /* контрольная сумма */
+
+/*
+Объявление заголовка мультизагрузки помечает программу как ядро. Все эти
+значения можно найти в стандарте. Загрузчик будет искать этот заголовок
+в первых 8 кБ файла ядра, с отступом до 32х-битной границы. Сигнатура может
+находиться в отдельной секции, поэтому заголовок может быть принудительно
+помещен в начало файла.
+*/
+.section .multiboot
+.align 4
+.long MAGIC
+.long FLAGS
+.long CHECKSUM
+
+/*
+Стандарт мультизагрузочности не предусматривает установку значения регистра
+указателя на стек (esp), т. е. стек должен предоставляться ядром. По стандарту
+происходит выделение (аллокация) памяти для малого стека путём создания символа
+в его конце, после происходит выделение 16384 байт для этого и создаётся символ
+в начале. На архитектуре x86 стек направлен вниз. Стек находится в отдельной секции,
+поэтому его можно пометить как nobits, что означает меньший развер файла ядра,
+поскольку он не содержит неинициализированного стека. Стек на x86 должен быть
+выровнен до 16 байт в соответствии со стандартом System V ABI и фактическими
+расширениями. Компилятор предполагает, что стек выровнен корректно, отсутствие
+выравнивания может привести к неопределенному поведению.
+*/
+.section .bss
+.align 16
+stack_bottom:
+.skip 16384 # 16 KiB
+stack_top:
+
+/*
+Скрипт компоновщика указывает _start как точку входа ядра, и загрузчик перейдёт
+к этой метке сразу после полной загрузки ядра. Не важно, возвращает ли эта функция
+значение, на данном этапе загрузчика уже нет.
+*/
+.section .text
+.global _start
+.type _start, @function
+_start:
+    /*
+    Загрузчик запускается в защищённом (protected) режиме на x86.
+    Прерывания (interrupts) не доступны, как и подкачка страниц памяти (memory paging).
+    В этот момоент ЦП находится в состоянии, указанном стандартом мультизагрузочности,
+    и под полным контролем ядра. Ядро может только использовать аппаратные функции, либо
+    собственный код. Здесь нет ни printf, ни ограничений безопасности, ни каких-либо
+    гарантий, ни механизма отладки - только то, что предоставляет само ядно.
+    */
+
+    /*
+    Чтобы &quot;установить&quot; стек сохраняем указатель на его начало в регистр `esp`.
+    Это необходимо сделать на ассемблере, потому что языки как C не могут
+    функционировать без стека.
+    */
+    mov $stack_top, %esp
+
+    /*
+    Это хорошее место для инициализации минимального состояния процессора до перехода
+    в высокоуровневое ядро. Лучше всего свести к минимуму раннюю среду, в которой важные
+    функции отключены. Помните, что процессор еще не полностью инициализирован: инструкции
+    с плавающей запятой и расширения набора инструкций, еще не доступны. Здесь должен быть
+    загружен GDT и включена подкачка страниц памяти. Функций C++, как глобальные конструкторы
+    и исключения, потребуют  поддержки среды выполнения для нормальной работы.
+    */
+
+    /*
+    Переход в высокоуровневое ядро. ABI требует, чтобы стек был выровнен по 16 байт во время
+    вызова инструкции (которая отдаёт 4х-байтный указатель). Изначально стек был выровнен,
+    и с тех пор мы поместили в стек несколько байтов, кратное 16 байтам (пока что 0 байт),
+    поэтому выравнивание было сохранено, и вызов четко определен.
+    */
+    call kernel_main
+
+    /*
+    Если системе больше нечего делать, то мы оставляем компьютер в бесконечном цикле.
+    Для этого мы:
+    1) Отключаем прерывания через cli (clear interrupt enable in eflags).
+       Они уже отключены загрузчиком, поэтому это необезательно.
+       Возможно, что позже вы захотите включить прерывания и вернуться из kernel_main
+       (что немного бессмысленно).
+    2) Ожидаем следующим прерываним инструкцию hlt (англ. halt - остановки/отключения).
+       Т. к. они выключены, это заблокирует компьютер.
+    3) Переходим на инструкцию hlt, если это вызвано не маскируемым прерыванием или
+       режимом управления системой.
+    */
+    cli
+1:
+    hlt
+    jmp 1b
+
+/*
+Устанавливаем размер символа _start, используя текущую позицию (&quot;.&quot;), путём
+вычитания позиции метки этого символа. Это может быть полезно при отладке
+или реализации стека вызовов (call stack).
+*/
+.size _start, . - _start
+</code></pre></div><p>Теперь вы можете собрать <code>boot.s</code>, используя:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>i686-elf-as boot.s -o boot.o
+</code></pre></div><h2 id="реализация-ядра"><a href="#реализация-ядра" class="header-anchor">#</a> Реализация ядра</h2> <p>После написания базового загрузчика можно использовать более высокоуровневые языки, например C/C++.</p> <h3 id="отдельные-и-размещенные-среды"><a href="#отдельные-и-размещенные-среды" class="header-anchor">#</a> Отдельные и размещённые среды</h3> <p>Если вы уже использовали C/C++ для пользовательских прогрмамм, то вы использовали так называемую резмещённую (<em>англ.</em> hosted) среду, что означает наличие стандартной библиотеки языка и различных удобств, доступных во время выполнения (<em>англ.</em> runtime). Также сущесвуют отдельные (<em>англ.</em> freestanding) среды, которые мы и будем использовать. Это означает, что у нас ничего не будет из стандартного набора, и мы должы будет реализовать их самостоятельно. Тем не менее, у нас будут некоторые заголовочные файлы, которые являются частью компилятора, а не стандарта C.</p> <p>Среди них:</p> <ul><li><code>stdbool.h</code> - тип для булевых (логических) значений;</li> <li><code>stddef.h</code> - <code>size_t</code> и <code>NULL</code>;</li> <li><code>stdint.h</code> - <code>intx_t</code> и <code>uintx_t</code> для точных размеров переменных (если вы использовали <code>short</code> вместо <code>uint16_t</code>, то при изменении размера типа всё может неожиданно сломаться;</li> <li><code>float.h</code>, <code>iso646.h</code>, <code>limits.h</code>, и <code>stdarg.h</code>.</li></ul> <h3 id="пищем-ядро-на-c"><a href="#пищем-ядро-на-c" class="header-anchor">#</a> Пищем ядро на C</h3> <p>Для начала мы напишем простое ядро, которое будет использовать текстовый режим VGA (адрес <code>0xB8000</code>). Оно будет запоминать положение следущего символа в буффере и выводить простые симфолы, но буде поддержки переноса строк. Добавление поддержки этой функции может стать вашей первой самостоятельной задачей. Потратьте немного времени, чтобы понять собственный код.</p> <div class="custom-block warning"><p class="custom-block-title">Важно!</p> <p>Текстовый режим (также как и BIOS) является устаревшим на новых устройствах, т. к. UEFI поддерживает только буффер пикселей. Для будущей совместимости вы можете начать с этого. Просим загрузчик настроить графический буффер соответствующим флагом мультизагрузки, либо самостоятельно используем вызовы VESA VBE. В отличии от текстового режима VGA, буффер имеет пиксели, что озачает ручную отрисовку каждого символа, поддержку пролистывания (скролла), перемещения курсока и т. д. Также значит, что вам потребуется другой <code>terminal_putchar</code> и шрифт (изображения для каждого символа). Все дистрибутивы Linux поставляют экранные шрифты (<em>англ.</em> PC Screen Fonts), которые вы можете использовать.</p></div> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stddef.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h&gt;</span></span>
+
+<span class="token comment">/* Проверяем, что используется привильное нацеливание сборки. */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token function">defined</span><span class="token punctuation">(</span>__linux__<span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">error</span> <span class="token string">&quot;Вы не используете кросс-компилятор, скорее всего это приведёт к проблемам&quot;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token operator">!</span><span class="token function">defined</span><span class="token punctuation">(</span>__i386__<span class="token punctuation">)</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">error</span> <span class="token string">&quot;Данный пример будет работать только с компилятором ix86-elf&quot;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+
+<span class="token comment">/* Констатны цветов для текстового режима. */</span>
+<span class="token keyword">enum</span> <span class="token class-name">vga_color</span> <span class="token punctuation">{</span>
+    VGA_COLOR_BLACK <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    VGA_COLOR_BLUE <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span>
+    VGA_COLOR_GREEN <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
+    VGA_COLOR_CYAN <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span>
+    VGA_COLOR_RED <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">,</span>
+    VGA_COLOR_MAGENTA <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">,</span>
+    VGA_COLOR_BROWN <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_GREY <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">,</span>
+    VGA_COLOR_DARK_GREY <span class="token operator">=</span> <span class="token number">8</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_BLUE <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_GREEN <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_CYAN <span class="token operator">=</span> <span class="token number">11</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_RED <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_MAGENTA <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">,</span>
+    VGA_COLOR_LIGHT_BROWN <span class="token operator">=</span> <span class="token number">14</span><span class="token punctuation">,</span>
+    VGA_COLOR_WHITE <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token class-name">uint8_t</span> <span class="token function">vga_entry_color</span><span class="token punctuation">(</span><span class="token keyword">enum</span> <span class="token class-name">vga_color</span> fg<span class="token punctuation">,</span> <span class="token keyword">enum</span> <span class="token class-name">vga_color</span> bg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> fg <span class="token operator">|</span> bg <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">inline</span> <span class="token class-name">uint16_t</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> uc<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> color<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token punctuation">)</span> uc <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token punctuation">)</span> color <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token class-name">size_t</span> <span class="token function">strlen</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> str<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token class-name">size_t</span> len <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>str<span class="token punctuation">[</span>len<span class="token punctuation">]</span><span class="token punctuation">)</span> len<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> len<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token class-name">size_t</span> VGA_WIDTH <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">const</span> <span class="token class-name">size_t</span> VGA_HEIGHT <span class="token operator">=</span> <span class="token number">25</span><span class="token punctuation">;</span>
+
+<span class="token class-name">size_t</span> terminal_row<span class="token punctuation">;</span>
+<span class="token class-name">size_t</span> terminal_column<span class="token punctuation">;</span>
+<span class="token class-name">uint8_t</span> terminal_color<span class="token punctuation">;</span>
+<span class="token class-name">uint16_t</span><span class="token operator">*</span> terminal_buffer<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_initialize</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    terminal_row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    terminal_column <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    terminal_color <span class="token operator">=</span> <span class="token function">vga_entry_color</span><span class="token punctuation">(</span>VGA_COLOR_LIGHT_GREY<span class="token punctuation">,</span> VGA_COLOR_BLACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    terminal_buffer <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">uint16_t</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token number">0xB8000</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> y <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> y <span class="token operator">&lt;</span> VGA_HEIGHT<span class="token punctuation">;</span> y<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> x <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> x <span class="token operator">&lt;</span> VGA_WIDTH<span class="token punctuation">;</span> x<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> <span class="token class-name">size_t</span> index <span class="token operator">=</span> y <span class="token operator">*</span> VGA_WIDTH <span class="token operator">+</span> x<span class="token punctuation">;</span>
+            terminal_buffer<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">,</span> terminal_color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_setcolor</span><span class="token punctuation">(</span><span class="token class-name">uint8_t</span> color<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    terminal_color <span class="token operator">=</span> color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_putentryat</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">,</span> <span class="token class-name">uint8_t</span> color<span class="token punctuation">,</span> <span class="token class-name">size_t</span> x<span class="token punctuation">,</span> <span class="token class-name">size_t</span> y<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token class-name">size_t</span> index <span class="token operator">=</span> y <span class="token operator">*</span> VGA_WIDTH <span class="token operator">+</span> x<span class="token punctuation">;</span>
+    terminal_buffer<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">vga_entry</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> color<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_putchar</span><span class="token punctuation">(</span><span class="token keyword">char</span> c<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">terminal_putentryat</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> terminal_color<span class="token punctuation">,</span> terminal_column<span class="token punctuation">,</span> terminal_row<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>terminal_column <span class="token operator">==</span> VGA_WIDTH<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        terminal_column <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">++</span>terminal_row <span class="token operator">==</span> VGA_HEIGHT<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            terminal_row <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_write</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">size_t</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">terminal_putchar</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">terminal_write_string</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span><span class="token operator">*</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">terminal_write</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">kernel_main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">terminal_initialize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">terminal_write_string</span><span class="token punctuation">(</span><span class="token string">&quot;Hello, kernel World!\n&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>Обратите внимание, что в коде мы хотели использовать обычную функцию C <code>strlen</code>, которая является частью стандартной библиотеки C, которой у вас нет. Вместо этого мы положились на отдельный заголовок <code>stddef.h</code>, и собственную реализацию. И так вам придётся делать с каждой функцией из стандартной библиотеки, которую захотите использовать (заголовки для отдельной среды предоставляют только типы данным и макросы).</p> <p>Пример выше можно собрать, выполнив:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>i686-elf-gcc -c kernel.c -o kernel.o -std<span class="token operator">=</span>gnu99 -ffreestanding -O2 -Wall -Wextra
+</code></pre></div><p>Заметим, что код примера использует некоторый функционал из сборщика GNU для C99.</p> <h3 id="пишем-ядро-на-c"><a href="#пишем-ядро-на-c" class="header-anchor">#</a> Пишем ядро на C++</h3> <p>Написать ядро на C++ легко, но стоит помнить, что не весь функционал языка доступен. К примеру, выбрасывание исключений требует особой поддержи в среде выполнения, а также выделений памяти. В нашем случае просто добавляется <code>extern &quot;C&quot;</code> для главной функции. Важно, чтобы функция <code>kernel_main</code> была объявлена как видимостью для C, иначе компилятор добавит информацию в название сборки (<em>англ.</em> assembly). Это делает невозможным вызов этой функции из ассеблера.</p> <p>Сохраните всё в файл <code>kernel.cpp</code> (или с вашим любимым расширением файла с кодом на C++).
+Вы можете скомпилировать этот файл, используя:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>i686-elf-g++ -c kernel.cpp -o kernel.o -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
+</code></pre></div> <h2 id="компоновка-ядра"><a href="#компоновка-ядра" class="header-anchor">#</a> Компоновка ядра</h2> <p>Выше упомянутые <code>boot.s</code> и <code>kernel.c</code> содержат части нашего ядра, и для создания полноценного ядра остаётся только скомпоновать их собранные версии в программу ядра, которую загрузчик сможет использовать. При сборке пользовательских программ мы используем стандартные скрипты компоновки инструментов разработки. В нашем случае нужно написать собственный скрипт. Ниже пример <code>linker.ld</code>:</p> <div class="language-ld extra-class"><pre class="language-text"><code>/* Загрузчик начнёт выполение с этой метки, назначенной точкой входа. */
+ENTRY(_start)
+
+/* Сообщаем о различных секциях, которые содержатся с объектных файлах конечного ядра. */
+SECTIONS {
+    /* Инструкции будут размещены в первом 1 МБ, т. е. месте, принятом для расположения
+       ядер, загружаемых через загрузчик. */
+    . = 1M;
+
+    /*
+    Первым должен идти заголовок мультизагрузочности, иначе загрузчик не распознает
+    формат файла. Далее идёт секция &quot;.text&quot;.
+    */
+    .text BLOCK(4K) : ALIGN(4K) {
+        *(.multiboot)
+        *(.text)
+    }
+
+    /* Секция только для чтения. */
+    .rodata BLOCK(4K) : ALIGN(4K) {
+        *(.rodata)
+    }
+
+    /* Инициализированная секция данных */
+    .data BLOCK(4K) : ALIGN(4K) {
+        *(.data)
+    }
+
+    /* Неинициализированные перезаписываемые данные и стек */
+    .bss BLOCK(4K) : ALIGN(4K) {
+        *(COMMON)
+        *(.bss)
+    }
+
+    /*
+    Компилятор может пораждать другие секции, по умолчанию они будут находиться в
+    сегменте с таким же названием. Просто добавьте здесь, если требуется.
+    */
+}
+</code></pre></div><p>Мы используем компилятор в качестве компоновщика из-за большего контроля процесса. Не забудьте, что если вы использовали C++ при написании ядра, то нужно будет использовать компилятор для C++.</p> <p>Вы можете скомпоновать ядро командой ниже:</p> <div class="language-bash extra-class"><pre class="language-bash"><code>i686-elf-gcc -T linker.ld -o my_kernel.bin -ffreestanding -O2 -nostdlib boot.o kernel.o -lgcc
+</code></pre></div><div class="custom-block tip"><p class="custom-block-title">Заметка</p> <p>Некоторые туториалы предлагаю использовать <code>i686-elf-ld</code> вместо компилятор
+Note: Some tutorials suggest linking with i686-elf-ld rather than the compiler, но это не позволяет выполнять компилятору некоторые задачи во время компоновки.</p></div> <p>Теперь файл <code>my_kernel.bin</code> - ваше ядро (другие файлы более не нужны)!
+The file myos.bin is now your kernel (all other files are no longer needed). Note that we are linking against libgcc, which implements various runtime routines that your cross-compiler depends on. Leaving it out will give you problems in the future. If you did not build and install libgcc as part of your cross-compiler, you should go back now and build a cross-compiler with libgcc. The compiler depends on this library and will use it regardless of whether you provide it or not.</p> <h2 id="проверяем-ядро"><a href="#проверяем-ядро" class="header-anchor">#</a> Проверяем ядро</h2> <h3 id="проверка-мультизагрузочности"><a href="#проверка-мультизагрузочности" class="header-anchor">#</a> Проверка мультизагрузочности</h3> <p>Проверить присутствие заголовка мультизагрузочности v1 можно при помощи GRUB:</p> <div class="language-sh extra-class"><pre class="language-sh"><code>grub-file --is-x86-multiboot myos.bin
+</code></pre></div><p>Важно, чтобы заголовок находился в первых 8 КиБ с выравнивание в 4 байта, иначе GRUB выйдет с кодом 1. Поверка v2 заголовка проводится с аргументом <code>--is-x86-multiboot2</code>. Чтобы не проверять возвращаемый код, можно использовать sh-скрипт:</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token keyword">if</span> grub-file --is-x86-multiboot <span class="token variable">$1</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">&quot;Мультизагрузочный заголовок найден&quot;</span>
+<span class="token keyword">else</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">&quot;Образ не содержит мультизагрузочный заголовок&quot;</span>
+<span class="token keyword">fi</span>
+</code></pre></div><h3 id="сборка-загрузочного-cd-rom-образа"><a href="#сборка-загрузочного-cd-rom-образа" class="header-anchor">#</a> Сборка загрузочного CD-ROM образа</h3> <p>Для начала нужно создать файл <code>boot/grub/grub.cfg</code> в папке <code>isodir</code>, который будет хранить загрузочную конфигурацию:</p> <div class="language-txt extra-class"><pre class="language-txt"><code>menuentry &quot;Boot MyOS&quot; {
+    multiboot /boot/myos.bin
+}
+</code></pre></div><p>Далее переместим скомпилированное ядро <code>myos.bin</code> в <code>isodir/boot</code> и соберём сам образ:</p> <div class="language-sh extra-class"><pre class="language-sh"><code>grub-mkrescue -o myos.iso isodir
+</code></pre></div><h3 id="тестовыи-запуск"><a href="#тестовыи-запуск" class="header-anchor">#</a> Тестовый запуск</h3> <div class="language-sh extra-class"><pre class="language-sh"><code>qemu-system-i386 -cdrom myos.iso
+</code></pre></div><p>После загрузки вы, скорее всего, увидите &quot;Hello, kernel World!&quot;.</p> <p>Дополнительно, QEMU поддерживает прямую загрузку ядра без загрузочного образа:</p> <div class="language-sh extra-class"><pre class="language-sh"><code>qemu-system-i386 -kernel myos.bin
+</code></pre></div><h2 id="что-дальше"><a href="#что-дальше" class="header-anchor">#</a> Что дальше?</h2> <p>Только что на свет появилась ещё одна ОС, поздравляем! Но это только начало. Вот что вы можете сделать:</p> <h3 id="поддержка-переносов-строки-в-драивер-терминала"><a href="#поддержка-переносов-строки-в-драивер-терминала" class="header-anchor">#</a> Поддержка переносов строки в драйвер терминала</h3> <p>Текстовый режим VGA на месте <code>\n</code> хранит другой символ, поэтому следует добавить проверку в <code>terminal_putchar</code>, которая будет увелимивать <code>terminal_row</code> и сбрасывать <code>terminal_column</code>.</p> <h3 id="пролистывание-терминала"><a href="#пролистывание-терминала" class="header-anchor">#</a> Пролистывание терминала</h3> <p>Сейчас, если мы достигаем конца экрана, то следующим символом просто оказываемя в его начале. Вместе этого следует сдвигать строки вверх, оставляя одну строку для ввода символов.</p> <h3 id="цветные-ascii-арты"><a href="#цветные-ascii-арты" class="header-anchor">#</a> Цветные ASCII-арты</h3> <p>Текущий терминальный драйвер поддерживает только 16 цветов (из них 8 фоновых), поэтому вам понадобится нормальный VGA драйвер.</p> <h3 id="глобальные-конструкторы"><a href="#глобальные-конструкторы" class="header-anchor">#</a> Глобальные конструкторы</h3> <p>This tutorial showed a small example of how to create a minimal environment for C and C++ kernels. Unfortunately, you don't have everything set up yet. For instance, C++ with global objects will not have their constructors called because you never do it. The compiler uses a special mechanism for performing tasks at program initialization time through the <code>crt*.o</code> objects, which may be valuable even for C programmers. If you combine the <code>crt*.o</code> files correctly, you will create an <code>_init</code> function that invokes all the program initialization tasks. Your <code>boot.o</code> object file can then invoke <code>_init</code> before calling <code>kernel_main</code>.</p> <h3 id="организация-ос"><a href="#организация-ос" class="header-anchor">#</a> Организация ОС</h3> <p><strong>Главная статья</strong>: <a href="/osdev/intro/skeleton.html">Пример организации ОС</a></p> <p>Этот туториал покажет как нетерпеливому новичку получить приветствие от своей ОС. В нём не будет лучших практик организации ОС, однако вы узнаете как сделать ОС с ядром, стандартной библиотекой и подготовленным пространством для пользователя.</p> <h3 id="дальнеишее-изучение"><a href="#дальнеишее-изучение" class="header-anchor">#</a> Дальнейшее изучение</h3> <h2 id="частые-вопросы"><a href="#частые-вопросы" class="header-anchor">#</a> Частые вопросы</h2> <h3 id="почему-используется-мультизагрузочныи-заголовок-разве-grub-не-умеет-работать-с-elf"><a href="#почему-используется-мультизагрузочныи-заголовок-разве-grub-не-умеет-работать-с-elf" class="header-anchor">#</a> Почему используется мультизагрузочный заголовок? Разве GRUB не умеет работать с ELF?</h3> <p>GRUB может загружать множество разных форматов. Однако, этот туториал описывает создание ядра, сомвестимого со стандартам мультизагрузочности, что означает поддержку и другимим загрузчиками.</p> <h3 id="grub-очищает-секцию-bss-перед-загрузкои-ядра"><a href="#grub-очищает-секцию-bss-перед-загрузкои-ядра" class="header-anchor">#</a> GRUB очищает секцию BSS перед загрузкой ядра?</h3> <p>Да. Для ELF секция .bss автоматически определяется и очищается (хотя в стандарте мультизагрузочности нет чётких указаний). Для других форматов вы можете использовать флаг №16 мультизагрузочного заголовка и не нулевое значение для поля <code>bss_end_addr</code>.</p> <h3 id="grub-error-13-invalid-or-unsupported-executable-format"><a href="#grub-error-13-invalid-or-unsupported-executable-format" class="header-anchor">#</a> [GRUB] Error 13: Invalid or unsupported executable format</h3> <p>Chances are the Multiboot header is missing from the final executable, or it is not at the right location.
+If you are using some other format than ELF (such as PE), you should specify the AOUT kludge in the Multiboot header. The grub-file program describe aboveand &quot;objdump -h&quot; should give you more hints about what is going on.
+It may also happen if you use an ELF object file instead of an executable (e.g. you have an ELF file with unresolved symbols or unfixable relocations). Try to link your ELF file to a binary executable to get more accurate error messages.
+A common problem when your kernel size increases, is that the Multiboot header does no longer appear at the start of the output binary. The common solutions is to put the Multiboot header in a separate section and make sure that section is first in the output binary, or to include the Multiboot header itself in the linker script.</p> <h3 id="qemu-could-not-read-from-cd-rom-code-0009"><a href="#qemu-could-not-read-from-cd-rom-code-0009" class="header-anchor">#</a> [QEMU] Could not read from CD-ROM (code 0009)</h3> <p>If your development system is booted from EFI it may be that you don't have the PC-BIOS version of the grub binaries installed anywhere. If you install them then grub-mkrescue will by default produce a hybrid ISO that will work in QEMU. On Ubuntu this can be achieved with: apt-get install grub-pc-bin.</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/osdev/intro/inline-asm.html" class="prev">
+        Встроенная сборка
+      </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/osdev/assets/js/app.6d4e7c16.js" defer></script><script src="/osdev/assets/js/2.d8a8b755.js" defer></script><script src="/osdev/assets/js/7.5089196a.js" defer></script>
+  </body>
+</html>
